@@ -27,9 +27,14 @@ class MemcacheConnector {
 			);
 		}
 
-		if ($memcache->getVersion() === false)
-		{
-			throw new RuntimeException("Could not establish Memcache connection.");
+		try {
+			if ($memcache->getVersion() === false)
+			{
+				\Log::critical("Could not establish Memcache connection.");
+			}
+		}
+		catch(\Exception $e) {
+			\Log::critical("Could not establish Memcache connection.");
 		}
 
 		return $memcache;
