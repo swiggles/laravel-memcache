@@ -33,7 +33,7 @@ class MemcacheStoreTest extends PHPUnit_Framework_TestCase
             $this->equalTo(60)
         );
         $store = new Swiggles\Memcache\MemcacheStore($memcache);
-        $store->put('foo', 'bar', 1);
+        $store->put('foo', 'bar', 60);
     }
 
 
