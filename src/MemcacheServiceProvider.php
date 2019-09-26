@@ -79,10 +79,8 @@ class MemcacheServiceProvider extends ServiceProvider {
      */
     public function extendCache(Application $app)
     {
-        $app->resolving('cache', function(CacheManager $cache) {
-            $cache->extend('memcache', function ($app) {
-                return $app['memcache.store'];
-            });
+        $app->make('cache')->extend('memcache', function ($app) {
+            return $app['memcache.store'];
         });
     }
 
@@ -93,10 +91,8 @@ class MemcacheServiceProvider extends ServiceProvider {
      */
     public function extendSession(Application $app)
     {
-        $app->resolving('session', function(SessionManager $session) {
-            $session->extend('memcache', function ($app) {
-                return $app['memcache.driver'];
-            });
+        $app->make('session')->extend('memcache', function ($app) {
+            return $app['memcache.driver'];
         });
     }
 
