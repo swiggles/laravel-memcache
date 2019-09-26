@@ -40,7 +40,7 @@ class MemcacheServiceProvider extends ServiceProvider {
         $this->app->singleton('memcache.driver', function($app)
         {
             $minutes = $this->app['config']['session.lifetime'];
-            return new MemcacheHandler($app['memcache.store'], $minutes);
+            return new MemcacheHandler($app['memcache.store'], $minutes * 60);
         });
     }
 

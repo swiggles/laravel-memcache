@@ -9,13 +9,13 @@ class MemcacheHandler implements SessionHandlerInterface {
      * Create a new cache driven handler instance.
      *
      * @param  \Illuminate\Cache\Repository  $cache
-     * @param  int  $minutes
+     * @param  int  $seconds
      * @return void
      */
-    public function __construct(CacheContract $cache, $minutes)
+    public function __construct(CacheContract $cache, $seconds)
     {
         $this->cache = $cache;
-        $this->minutes = $minutes;
+        $this->seconds = $seconds;
     }
 
     public function open($savePath, $sessionName)
@@ -35,7 +35,7 @@ class MemcacheHandler implements SessionHandlerInterface {
     
     public function write($sessionId, $data)
     {
-        return $this->cache->put($sessionId, $data, $this->minutes);
+        return $this->cache->put($sessionId, $data, $this->seconds);
     }
     
     public function destroy($sessionId)
