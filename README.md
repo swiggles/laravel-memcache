@@ -18,14 +18,8 @@ Add the package to your composer.json and run composer update.
 
 Update: added Laravel 5 support, not BC
 ```php
-"swiggles/memcache": "~2.0"
+"hashtap/memcache": "~2.0"
 ```
-
-Use the below for older versions of laravel 5
-```php
-"swiggles/memcache": "~1.0"
-```
-
 Add the memcache service provider in app/config/app.php:
 
 ```php
@@ -34,13 +28,13 @@ Add the memcache service provider in app/config/app.php:
 
 You may now update your config/cache.php config file to use memcache
 ```php
-	'default' => 'memcache',
+'default' => 'memcache',
 ```
 
 You may now update your config/session.php config file to use memcache
 
 ```php
-	'driver' => 'memcache',
+'driver' => 'memcache',
 ```
 
 **Notice: This memcache driver uses the same config as Memcached**
@@ -52,3 +46,4 @@ It has been modified to work with Laravel 5.2.
 * [2.0] Laravel 5.2 support added, (not bc)
 * [2.0.1] Removed support for PHP 5.4
 * [2.0.2] Laravel ~5.0 support added
+* [2.0.3] Support Laravel 7.0
