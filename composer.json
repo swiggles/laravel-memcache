@@ -1,9 +1,8 @@
 {
   "name": "hashtap/memcache",
-  "description": "Memcache driver for Laravel 5",
+  "description": "Memcache driver for Laravel",
   "keywords": [
     "Laravel",
-    "Laravel 5",
     "Cache",
     "Caching",
     "Memcache"
@@ -18,14 +17,14 @@
     }
   ],
   "require": {
-    "php": ">=5.4.0",
-    "illuminate/support": "~5.0|^6.0|^7.0"
+    "php": "^7.2",
+    "illuminate/support": "^6.0|^7.0"
   },
   "require-dev": {
     "phpunit/phpunit": "~4.0",
     "mockery/mockery": "~0.9",
-    "illuminate/session": "~5.0|^6.0|^7.0",
-    "illuminate/cache": "~5.0|^6.0|^7.0"
+    "illuminate/session": "^6.0|^7.0",
+    "illuminate/cache": "^6.0|^7.0"
   },
   "autoload": {
     "psr-4": {

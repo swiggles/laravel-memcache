@@ -1,10 +1,10 @@
 <?php namespace Swiggles\Memcache;
 
-use Illuminate\Contracts\Cache\Store;
 use Illuminate\Cache\TaggableStore;
+use Illuminate\Contracts\Cache\Store;
 
-class MemcacheStore extends TaggableStore implements Store {
-
+class MemcacheStore extends TaggableStore implements Store
+{
 	/**
 	 * The Memcached instance.
 	 *
@@ -22,32 +22,31 @@ class MemcacheStore extends TaggableStore implements Store {
 	/**
 	 * Create a new Memcache store.
 	 *
-	 * @param  \Memcache  $memcache
-	 * @param  string     $prefix
+	 * @param  \Memcache $memcache
+	 * @param  string $prefix
 	 * @return void
 	 */
 	public function __construct(\Memcache $memcache, $prefix = '')
 	{
 		$this->memcache = $memcache;
-		$this->prefix = strlen($prefix) > 0 ? $prefix.':' : '';
+		$this->prefix = strlen($prefix) > 0 ? $prefix . ':' : '';
 	}
 
 	/**
 	 * Retrieve an item from the cache by key.
 	 *
-	 * @param  string  $key
+	 * @param  string $key
 	 * @return mixed
 	 */
 	public function get($key)
 	{
-		if ($value = $this->memcache->get($this->prefix.$key)) {
-		    return $value;
+		if ($value = $this->memcache->get($this->prefix . $key)) {
+			return $value;
 		}
 	}
 
 	/**
 	 * Retrieve multiple items from the cache by key.
-	 *
 	 * Items not found in the cache will have a null value.
 	 *
 	 * @param  array $keys
@@ -56,81 +55,83 @@ class MemcacheStore extends TaggableStore implements Store {
 	public function many(array $keys)
 	{
 		$return = [];
+
 		foreach ($keys as $key) {
 			$return[$key] = $this->get($key);
 		}
+
 		return $return;
 	}
 
 	/**
 	 * Store an item in the cache for a given number of minutes.
 	 *
-	 * @param  string  $key
-	 * @param  mixed   $value
-	 * @param  int     $minutes
+	 * @param string $key
+	 * @param mixed $value
+	 * @param int $seconds
 	 * @return void
 	 */
-	public function put($key, $value, $minutes)
+	public function put($key, $value, $seconds)
 	{
-		$this->memcache->set($this->prefix.$key, $value, false, $minutes * 60);
+		$this->memcache->set($this->prefix . $key, $value, false, $seconds);
 	}
 
 	/**
 	 * Store multiple items in the cache for a given number of minutes.
 	 *
-	 * @param  array $values
-	 * @param  int $minutes
+	 * @param array $values
+	 * @param int $seconds
 	 * @return void
 	 */
-	public function putMany(array $values, $minutes)
+	public function putMany(array $values, $seconds)
 	{
 		foreach ($values as $key => $value) {
-			$this->put($key, $value, $minutes);
+			$this->put($key, $value, $seconds);
 		}
 	}
 
 	/**
 	 * Store an item in the cache if the key doesn't exist.
 	 *
-	 * @param  string  $key
-	 * @param  mixed   $value
-	 * @param  int     $minutes
+	 * @param string $key
+	 * @param mixed $value
+	 * @param int $seconds
 	 * @return bool
 	 */
-	public function add($key, $value, $minutes)
+	public function add($key, $value, $seconds)
 	{
-		return $this->memcache->add($this->prefix.$key, $value, false, $minutes * 60);
+		return $this->memcache->add($this->prefix . $key, $value, false, $seconds);
 	}
 
 	/**
 	 * Increment the value of an item in the cache.
 	 *
-	 * @param  string  $key
-	 * @param  mixed   $value
-     	 * @return int|bool
+	 * @param  string $key
+	 * @param  mixed $value
+	 * @return int|bool
 	 */
 	public function increment($key, $value = 1)
 	{
-		return $this->memcache->increment($this->prefix.$key, $value);
+		return $this->memcache->increment($this->prefix . $key, $value);
 	}
 
 	/**
 	 * Decrement the value of an item in the cache.
 	 *
-	 * @param  string  $key
-	 * @param  mixed   $value
-     	 * @return int|bool
+	 * @param  string $key
+	 * @param  mixed $value
+	 * @return int|bool
 	 */
 	public function decrement($key, $value = 1)
 	{
-		return $this->memcache->decrement($this->prefix.$key, $value);
+		return $this->memcache->decrement($this->prefix . $key, $value);
 	}
 
 	/**
 	 * Store an item in the cache indefinitely.
 	 *
-	 * @param  string  $key
-	 * @param  mixed   $value
+	 * @param  string $key
+	 * @param  mixed $value
 	 * @return void
 	 */
 	public function forever($key, $value)
@@ -141,12 +142,12 @@ class MemcacheStore extends TaggableStore implements Store {
 	/**
 	 * Remove an item from the cache.
 	 *
-	 * @param  string  $key
+	 * @param  string $key
 	 * @return void
 	 */
 	public function forget($key)
 	{
-		$this->memcache->delete($this->prefix.$key);
+		$this->memcache->delete($this->prefix . $key);
 	}
 
 	/**
@@ -164,7 +165,7 @@ class MemcacheStore extends TaggableStore implements Store {
 	 *
 	 * @return \Memcached
 	 */
-	public function getMemcache()
+	public function getMemcache(): \Memcached
 	{
 		return $this->memcache;
 	}
