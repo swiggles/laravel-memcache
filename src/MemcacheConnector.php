@@ -1,35 +1,31 @@
-<?php namespace Swiggles\Memcache;
+<?php
 
-use Memcache;
-use RuntimeException;
+namespace Swiggles\Memcache;
 
-class MemcacheConnector {
-
+class MemcacheConnector
+{
 	/**
 	 * Create a new Memcache connection.
 	 *
-	 * @param  array  $servers
+	 * @param  array $servers
 	 * @return \Memcache
-	 *
 	 * @throws \RuntimeException
 	 */
-	public function connect(array $servers)
+	public function connect(array $servers): \Memcache
 	{
 		$memcache = $this->getMemcache();
 
 		// For each server in the array, we'll just extract the configuration and add
 		// the server to the Memcached connection. Once we have added all of these
 		// servers we'll verify the connection is successful and return it back.
-		foreach ($servers as $server)
-		{
+		foreach ($servers as $server) {
 			$memcache->addServer(
 				$server['host'], $server['port'], $server['weight']
 			);
 		}
 
-		if ($memcache->getVersion() === false)
-		{
-			throw new RuntimeException("Could not establish Memcache connection.");
+		if ($memcache->getVersion() === false) {
+			throw new \RuntimeException("Could not establish Memcache connection.");
 		}
 
 		return $memcache;
@@ -40,9 +36,9 @@ class MemcacheConnector {
 	 *
 	 * @return \Memcached
 	 */
-	protected function getMemcache()
+	protected function getMemcache(): \Memcache
 	{
-		return new Memcache;
+		return new \Memcache;
 	}
 
 }

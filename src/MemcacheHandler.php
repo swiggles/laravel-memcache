@@ -1,61 +1,99 @@
-<?php namespace Swiggles\Memcache;
+<?php
 
-use SessionHandlerInterface;
+namespace Swiggles\Memcache;
+
 use Illuminate\Contracts\Cache\Repository as CacheContract;
+use SessionHandlerInterface;
 
-class MemcacheHandler implements SessionHandlerInterface {
+class MemcacheHandler implements SessionHandlerInterface
+{
+	protected
 
-    /**
-     * Create a new cache driven handler instance.
-     *
-     * @param  \Illuminate\Cache\Repository  $cache
-     * @param  int  $minutes
-     * @return void
-     */
-    public function __construct(CacheContract $cache, $minutes)
-    {
-        $this->cache = $cache;
-        $this->minutes = $minutes;
-    }
+		/**
+		 * @var CacheContract
+		 */
+		$cache,
 
-    public function open($savePath, $sessionName)
-    {
-        return true;
-    }
-    
-    public function close()
-    {
-        return true;
-    }
-    
-    public function read($sessionId)
-    {
-        return $this->cache->get($sessionId) ?: '';
-    }
-    
-    public function write($sessionId, $data)
-    {
-        return $this->cache->put($sessionId, $data, $this->minutes);
-    }
-    
-    public function destroy($sessionId)
-    {
-        return $this->cache->forget($sessionId);
-    }
-    
-    public function gc($lifetime)
-    {
-        return true;
-    }
-    
-    /**
-     * Get the underlying cache repository.
-     *
-     * @return \Illuminate\Cache\Repository
-     */
-    public function getCache()
-    { 
-        return $this->cache;
-    }
+		/**
+		 * @var int
+		 */
+		$seconds;
+
+	/**
+	 * MemcacheHandler constructor.
+	 *
+	 * @param CacheContract $cache
+	 * @param int $seconds
+	 */
+	public function __construct(CacheContract $cache, int $seconds)
+	{
+		$this->cache = $cache;
+		$this->seconds = $seconds;
+	}
+
+	/**
+	 * @param string $savePath
+	 * @param string $sessionName
+	 * @return bool
+	 */
+	public function open($savePath, $sessionName): bool
+	{
+		return true;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function close(): bool
+	{
+		return true;
+	}
+
+	/**
+	 * @param string $sessionId
+	 * @return string
+	 */
+	public function read($sessionId): string
+	{
+		return $this->cache->get($sessionId) ?: '';
+	}
+
+	/**
+	 * @param string $sessionId
+	 * @param string $data
+	 * @return bool
+	 */
+	public function write($sessionId, $data)
+	{
+		return $this->cache->put($sessionId, $data, $this->seconds);
+	}
+
+	/**
+	 * @param string $sessionId
+	 * @return bool
+	 */
+	public function destroy($sessionId): bool
+	{
+		return $this->cache->forget($sessionId);
+	}
+
+	/**
+	 * @param int $lifetime
+	 * @return bool
+	 */
+	public function gc($lifetime): bool
+	{
+		return true;
+	}
+
+	/**
+	 * Get the underlying cache repository.
+	 *
+	 * @return CacheContract
+	 */
+	public function getCache(): CacheContract
+	{
+		return $this->cache;
+	}
 
 }
