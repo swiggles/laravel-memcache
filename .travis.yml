@@ -1,4 +1,5 @@
 language: php
+cache: bundler 
 
 php:
   - 5.6
