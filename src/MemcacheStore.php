@@ -63,29 +63,29 @@ class MemcacheStore extends TaggableStore implements Store {
 	}
 
 	/**
-	 * Store an item in the cache for a given number of minutes.
+	 * Store an item in the cache for a given number of seconds.
 	 *
 	 * @param  string  $key
 	 * @param  mixed   $value
-	 * @param  int     $minutes
+	 * @param  int     $seconds
 	 * @return void
 	 */
-	public function put($key, $value, $minutes)
+	public function put($key, $value, $seconds)
 	{
-		$this->memcache->set($this->prefix.$key, $value, false, $minutes * 60);
+		$this->memcache->set($this->prefix.$key, $value, false, $seconds);
 	}
 
 	/**
-	 * Store multiple items in the cache for a given number of minutes.
+	 * Store multiple items in the cache for a given number of seconds.
 	 *
 	 * @param  array $values
-	 * @param  int $minutes
+	 * @param  int $seconds
 	 * @return void
 	 */
-	public function putMany(array $values, $minutes)
+	public function putMany(array $values, $seconds)
 	{
 		foreach ($values as $key => $value) {
-			$this->put($key, $value, $minutes);
+			$this->put($key, $value, $seconds);
 		}
 	}
 
@@ -94,12 +94,12 @@ class MemcacheStore extends TaggableStore implements Store {
 	 *
 	 * @param  string  $key
 	 * @param  mixed   $value
-	 * @param  int     $minutes
+	 * @param  int     $seconds
 	 * @return bool
 	 */
-	public function add($key, $value, $minutes)
+	public function add($key, $value, $seconds)
 	{
-		return $this->memcache->add($this->prefix.$key, $value, false, $minutes * 60);
+		return $this->memcache->add($this->prefix.$key, $value, false, $seconds);
 	}
 
 	/**
